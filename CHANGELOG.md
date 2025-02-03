@@ -1,3 +1,7 @@
+## 1.0.1
+
+* add timestamp from sensors
+
 ## 0.1.0
 
 * migrate to null safety

@@ -14,7 +14,16 @@ import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.PluginRegistry.Registrar
+  class EventData(values : FloatArray, timestamp: Long){
+  var values = values ;
+  var timestamp = timestamp;
 
+    override fun toString(): String {
+      return "${values[0]},${values[1]},${values[2]},$timestamp"
+    }
+
+
+}
 // translate from https://github.com/flutter/plugins/tree/master/packages/sensors
 /** MotionSensorsPlugin */
 public class MotionSensorsPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
@@ -152,8 +161,8 @@ class StreamHandlerImpl(private val sensorManager: SensorManager, sensorType: In
   }
 
   override fun onSensorChanged(event: SensorEvent?) {
-    val sensorValues = listOf(event!!.values[0], event.values[1], event.values[2])
-    eventSink?.success(sensorValues)
+    //val sensorValues = listOf(event!!.values[0], event.values[1], event.values[2])
+    eventSink?.success(EventData(floatArrayOf(event!!.values[0],event!!.values[1],event!!.values[2]),event!!.timestamp).toString())
   }
 
   fun setUpdateInterval(interval: Int) {
@@ -193,8 +202,8 @@ class RotationVectorStreamHandler(private val sensorManager: SensorManager, sens
     if (matrix[7] < -1.0f) matrix[7] = -1.0f
     var orientation = FloatArray(3)
     SensorManager.getOrientation(matrix, orientation)
-    val sensorValues = listOf(-orientation[0], -orientation[1], orientation[2])
-    eventSink?.success(sensorValues)
+    //val sensorValues = doubleArrayOf(-orientation[0], -orientation[1], orientation[2])
+    eventSink?.success(EventData(floatArrayOf(-orientation[0],-orientation[1],orientation[2]),event.timestamp).toString())
   }
 
   fun setUpdateInterval(interval: Int) {

@@ -120,7 +120,8 @@ class AccelerometerStreamHandler: NSObject, FlutterStreamHandler {
         if motionManager.isAccelerometerAvailable {
             motionManager.startAccelerometerUpdates(to: queue) { (data, error) in
                 if data != nil {
-                    events([-data!.acceleration.x * GRAVITY, -data!.acceleration.y * GRAVITY, -data!.acceleration.z * GRAVITY])
+                    events("\(-data!.acceleration.x * GRAVITY),\(-data!.acceleration.y * GRAVITY),\(-data!.acceleration.z * GRAVITY),\(Int(data!.timestamp * 1000000000))")
+                    //events([-data!.acceleration.x * GRAVITY, -data!.acceleration.y * GRAVITY, -data!.acceleration.z * GRAVITY])
                 }
             }
         }
@@ -145,7 +146,8 @@ class UserAccelerometerStreamHandler: NSObject, FlutterStreamHandler {
         if motionManager.isDeviceMotionAvailable {
             motionManager.startDeviceMotionUpdates(to: queue) { (data, error) in
                 if data != nil {
-                    events([-data!.userAcceleration.x * GRAVITY, -data!.userAcceleration.y * GRAVITY, -data!.userAcceleration.z * GRAVITY])
+                    events("\(-data!.userAcceleration.x * GRAVITY),\(-data!.userAcceleration.y * GRAVITY),\(-data!.userAcceleration.z * GRAVITY),\(Int(data!.timestamp * 1000000000))")
+                    //events([-data!.userAcceleration.x * GRAVITY, -data!.userAcceleration.y * GRAVITY, -data!.userAcceleration.z * GRAVITY])
                 }
             }
         }
@@ -170,7 +172,8 @@ class GyroscopeStreamHandler: NSObject, FlutterStreamHandler {
         if motionManager.isGyroAvailable {
             motionManager.startGyroUpdates(to: queue) { (data, error) in
                 if data != nil {
-                    events([data!.rotationRate.x, data!.rotationRate.y, data!.rotationRate.z])
+                    events("\(data!.rotationRate.x),\(data!.rotationRate.y),\(data!.rotationRate.z),\(Int(data!.timestamp * 1000000000))")
+                    //events([data!.rotationRate.x, data!.rotationRate.y, data!.rotationRate.z])
                 }
             }
         }
@@ -196,7 +199,8 @@ class MagnetometerStreamHandler: NSObject, FlutterStreamHandler {
             motionManager.showsDeviceMovementDisplay = true
             motionManager.startDeviceMotionUpdates(using: CMAttitudeReferenceFrame.xArbitraryCorrectedZVertical, to: queue) { (data, error) in
                 if data != nil {
-                    events([data!.magneticField.field.x, data!.magneticField.field.y, data!.magneticField.field.z])
+                    events("\(data!.magneticField.field.x),\(data!.magneticField.field.y),\(data!.magneticField.field.z),\(Int(data!.timestamp * 1000000000))")
+                    //events([data!.magneticField.field.x, data!.magneticField.field.y, data!.magneticField.field.z])
                 }
             }
         }
@@ -230,9 +234,11 @@ class AttitudeStreamHandler: NSObject, FlutterStreamHandler {
                     // Let the y-axis point to magnetic north instead of the x-axis
                     if self.attitudeReferenceFrame == CMAttitudeReferenceFrame.xMagneticNorthZVertical {
                         let yaw = (data!.attitude.yaw + Double.pi + Double.pi / 2).truncatingRemainder(dividingBy: Double.pi * 2) - Double.pi
-                        events([yaw, data!.attitude.pitch, data!.attitude.roll])
+                        events("\(yaw),\(data!.attitude.pitch),\(data!.attitude.roll),\(Int(data!.timestamp * 1000000000))")
+                        //events([yaw, data!.attitude.pitch, data!.attitude.roll])
                     } else {
-                        events([data!.attitude.yaw, data!.attitude.pitch, data!.attitude.roll])
+                        events("\(data!.attitude.yaw),\(data!.attitude.pitch),\(data!.attitude.roll),\(Int(data!.timestamp * 1000000000))")
+                        //events([data!.attitude.yaw, data!.attitude.pitch, data!.attitude.roll])
                     }
                 }
             }

@@ -20,46 +20,51 @@ const EventChannel _screenOrientationChannel = EventChannel('motion_sensors/scre
 /// a particular direction.
 class AccelerometerEvent {
   /// Contructs an instance with the given [x], [y], and [z] values.
-  AccelerometerEvent(this.x, this.y, this.z);
-  AccelerometerEvent.fromList(List<double> list)
-      : x = list[0],
-        y = list[1],
-        z = list[2];
+  AccelerometerEvent(this.x, this.y, this.z, this.timestamp);
+  AccelerometerEvent.fromString(List<String> data)
+      : x = double.parse(data[0]),
+        y = double.parse(data[1]),
+        z = double.parse(data[2]),
+        timestamp = int.parse(data[3]);
 
-  /// Acceleration force along the x axis (including gravity) measured in m/s^2.
-  ///
-  /// When the device is held upright facing the user, positive values mean the
-  /// device is moving to the right and negative mean it is moving to the left.
+
+    /// Acceleration force along the x axis (including gravity) measured in m/s^2.
+    ///
+    /// When the device is held upright facing the user, positive values mean the
+    /// device is moving to the right and negative mean it is moving to the left.
   final double x;
 
-  /// Acceleration force along the y axis (including gravity) measured in m/s^2.
-  ///
-  /// When the device is held upright facing the user, positive values mean the
-  /// device is moving towards the sky and negative mean it is moving towards
-  /// the ground.
+    /// Acceleration force along the y axis (including gravity) measured in m/s^2.
+    ///
+    /// When the device is held upright facing the user, positive values mean the
+    /// device is moving towards the sky and negative mean it is moving towards
+    /// the ground.
   final double y;
 
-  /// Acceleration force along the z axis (including gravity) measured in m/s^2.
-  ///
-  /// This uses a right-handed coordinate system. So when the device is held
-  /// upright and facing the user, positive values mean the device is moving
-  /// towards the user and negative mean it is moving away from them.
+    /// Acceleration force along the z axis (including gravity) measured in m/s^2.
+    ///
+    /// This uses a right-handed coordinate system. So when the device is held
+    /// upright and facing the user, positive values mean the device is moving
+    /// towards the user and negative mean it is moving away from them.
   final double z;
+  final int timestamp;
 
   @override
   String toString() => '[AccelerometerEvent (x: $x, y: $y, z: $z)]';
 }
 
 class MagnetometerEvent {
-  MagnetometerEvent(this.x, this.y, this.z);
-  MagnetometerEvent.fromList(List<double> list)
-      : x = list[0],
-        y = list[1],
-        z = list[2];
+  MagnetometerEvent(this.x, this.y, this.z, this.timestamp);
+  MagnetometerEvent.fromString(List<String> data)
+      : x = double.parse(data[0]),
+        y = double.parse(data[1]),
+        z = double.parse(data[2]),
+        timestamp = int.parse(data[3]);
 
   final double x;
   final double y;
   final double z;
+  final int timestamp;
   @override
   String toString() => '[Magnetometer (x: $x, y: $y, z: $z)]';
 }
@@ -68,11 +73,12 @@ class MagnetometerEvent {
 /// the device in 3D space.
 class GyroscopeEvent {
   /// Contructs an instance with the given [x], [y], and [z] values.
-  GyroscopeEvent(this.x, this.y, this.z);
-  GyroscopeEvent.fromList(List<double> list)
-      : x = list[0],
-        y = list[1],
-        z = list[2];
+  GyroscopeEvent(this.x, this.y, this.z, this.timestamp);
+  GyroscopeEvent.fromString(List<String> data)
+      : x = double.parse(data[0]),
+        y = double.parse(data[1]),
+        z = double.parse(data[2]),
+        timestamp = int.parse(data[3]);
 
   /// Rate of rotation around the x axis measured in rad/s.
   ///
@@ -95,6 +101,7 @@ class GyroscopeEvent {
   /// forward, but the orientation will change from portrait to landscape and so
   /// on.
   final double z;
+  final int timestamp;
 
   @override
   String toString() => '[GyroscopeEvent (x: $x, y: $y, z: $z)]';
@@ -105,11 +112,12 @@ class GyroscopeEvent {
 /// [AccelerometerEvent], this event does not include the effects of gravity.
 class UserAccelerometerEvent {
   /// Contructs an instance with the given [x], [y], and [z] values.
-  UserAccelerometerEvent(this.x, this.y, this.z);
-  UserAccelerometerEvent.fromList(List<double> list)
-      : x = list[0],
-        y = list[1],
-        z = list[2];
+  UserAccelerometerEvent(this.x, this.y, this.z, this.timestamp);
+  UserAccelerometerEvent.fromString(List<String> data)
+      : x = double.parse(data[0]),
+        y = double.parse(data[1]),
+        z = double.parse(data[2]),
+        timestamp = int.parse(data[3]);
 
   /// Acceleration force along the x axis (excluding gravity) measured in m/s^2.
   ///
@@ -130,17 +138,19 @@ class UserAccelerometerEvent {
   /// upright and facing the user, positive values mean the device is moving
   /// towards the user and negative mean it is moving away from them.
   final double z;
+  final int timestamp;
 
   @override
   String toString() => '[UserAccelerometerEvent (x: $x, y: $y, z: $z)]';
 }
 
 class OrientationEvent {
-  OrientationEvent(this.yaw, this.pitch, this.roll);
-  OrientationEvent.fromList(List<double> list)
-      : yaw = list[0],
-        pitch = list[1],
-        roll = list[2];
+  OrientationEvent(this.yaw, this.pitch, this.roll, this.timestamp);
+  OrientationEvent.fromString(List<String> data)
+      : yaw = double.parse(data[0]),
+        pitch = double.parse(data[1]),
+        roll = double.parse(data[2]),
+        timestamp = int.parse(data[3]);
 
   /// The yaw of the device in radians.
   final double yaw;
@@ -150,16 +160,18 @@ class OrientationEvent {
 
   /// The roll of the device in radians.
   final double roll;
+  final int timestamp;
   @override
-  String toString() => '[Orientation (yaw: $yaw, pitch: $pitch, roll: $roll)]';
+  String toString() => '[Orientation (yaw: $yaw, pitch: $pitch, roll: $roll, timestamp: $timestamp)]';
 }
 
 class AbsoluteOrientationEvent {
-  AbsoluteOrientationEvent(this.yaw, this.pitch, this.roll);
-  AbsoluteOrientationEvent.fromList(List<double> list)
-      : yaw = list[0],
-        pitch = list[1],
-        roll = list[2];
+  AbsoluteOrientationEvent(this.yaw, this.pitch, this.roll, this.timestamp);
+  AbsoluteOrientationEvent.fromString(List<String> data)
+      : yaw = double.parse(data[0]),
+        pitch = double.parse(data[1]),
+        roll = double.parse(data[2]),
+        timestamp = int.parse(data[3]);
 
   /// The yaw of the device in radians.
   final double yaw;
@@ -169,6 +181,7 @@ class AbsoluteOrientationEvent {
 
   /// The roll of the device in radians.
   final double roll;
+  final int timestamp;
   @override
   String toString() => '[Orientation (yaw: $yaw, pitch: $pitch, roll: $roll)]';
 }
@@ -250,7 +263,7 @@ class MotionSensors {
   /// A broadcast stream of events from the device accelerometer.
   Stream<AccelerometerEvent> get accelerometer {
     if (_accelerometerEvents == null) {
-      _accelerometerEvents = _accelerometerEventChannel.receiveBroadcastStream().map((dynamic event) => AccelerometerEvent.fromList(event.cast<double>()));
+      _accelerometerEvents = _accelerometerEventChannel.receiveBroadcastStream().map((dynamic event) => AccelerometerEvent.fromString((event as String).split(",")));
     }
     return _accelerometerEvents!;
   }
@@ -258,7 +271,7 @@ class MotionSensors {
   /// A broadcast stream of events from the device gyroscope.
   Stream<GyroscopeEvent> get gyroscope {
     if (_gyroscopeEvents == null) {
-      _gyroscopeEvents = _gyroscopeEventChannel.receiveBroadcastStream().map((dynamic event) => GyroscopeEvent.fromList(event.cast<double>()));
+      _gyroscopeEvents = _gyroscopeEventChannel.receiveBroadcastStream().map((dynamic event) => GyroscopeEvent.fromString((event as String).split(",")));
     }
     return _gyroscopeEvents!;
   }
@@ -266,7 +279,7 @@ class MotionSensors {
   /// Events from the device accelerometer with gravity removed.
   Stream<UserAccelerometerEvent> get userAccelerometer {
     if (_userAccelerometerEvents == null) {
-      _userAccelerometerEvents = _userAccelerometerEventChannel.receiveBroadcastStream().map((dynamic event) => UserAccelerometerEvent.fromList(event.cast<double>()));
+      _userAccelerometerEvents = _userAccelerometerEventChannel.receiveBroadcastStream().map((dynamic event) => UserAccelerometerEvent.fromString((event as String).split(",")));
     }
     return _userAccelerometerEvents!;
   }
@@ -274,7 +287,7 @@ class MotionSensors {
   /// A broadcast stream of events from the device magnetometer.
   Stream<MagnetometerEvent> get magnetometer {
     if (_magnetometerEvents == null) {
-      _magnetometerEvents = _magnetometerEventChannel.receiveBroadcastStream().map((dynamic event) => MagnetometerEvent.fromList(event.cast<double>()));
+      _magnetometerEvents = _magnetometerEventChannel.receiveBroadcastStream().map((dynamic event) => MagnetometerEvent.fromString((event as String).split(",")));
     }
     return _magnetometerEvents!;
   }
@@ -283,11 +296,11 @@ class MotionSensors {
   Stream<OrientationEvent> get orientation {
     if (_orientationEvents == null) {
       _orientationEvents = _orientationChannel.receiveBroadcastStream().map((dynamic event) {
-        var orientation = OrientationEvent.fromList(event.cast<double>());
+        var orientation = OrientationEvent.fromString((event as String).split(","));
         _initialOrientation ??= orientation;
         // Change the initial yaw of the orientation to zero
         var yaw = (orientation.yaw + math.pi - _initialOrientation!.yaw) % (math.pi * 2) - math.pi;
-        return OrientationEvent(yaw, orientation.pitch, orientation.roll);
+        return OrientationEvent(yaw, orientation.pitch, orientation.roll,orientation.timestamp);
       });
     }
     return _orientationEvents!;
@@ -296,7 +309,7 @@ class MotionSensors {
   /// The current absolute orientation of the device.
   Stream<AbsoluteOrientationEvent> get absoluteOrientation {
     if (_absoluteOrientationEvents == null) {
-      _absoluteOrientationEvents = _absoluteOrientationChannel.receiveBroadcastStream().map((dynamic event) => AbsoluteOrientationEvent.fromList(event.cast<double>()));
+      _absoluteOrientationEvents = _absoluteOrientationChannel.receiveBroadcastStream().map((dynamic event) => AbsoluteOrientationEvent.fromString((event as String).split(",")));
     }
     return _absoluteOrientationEvents!;
   }

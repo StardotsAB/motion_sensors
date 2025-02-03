@@ -4,6 +4,8 @@
 
 Flutter plugin for accessing the Android and iOS accelerometer, gyroscope, magnetometer and orientation sensors.
 
+An alteration of https://pub.dev/packages/motion_sensors to include timestamps.
+
 ## Getting Started
 
 To use this plugin, add `motion_sensors` as a [dependency in your pubspec.yaml

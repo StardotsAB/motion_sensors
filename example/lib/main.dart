@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vector_math/vector_math_64.dart' hide Colors;
 import 'package:motion_sensors/motion_sensors.dart';
+import 'package:vector_math/vector_math_64.dart' hide Colors;
 
 void main() {
   runApp(MyApp());
@@ -44,7 +44,8 @@ class _MyAppState extends State<MyApp> {
     motionSensors.magnetometer.listen((MagnetometerEvent event) {
       setState(() {
         _magnetometer.setValues(event.x, event.y, event.z);
-        var matrix = motionSensors.getRotationMatrix(_accelerometer, _magnetometer);
+        var matrix =
+            motionSensors.getRotationMatrix(_accelerometer, _magnetometer);
         _absoluteOrientation2.setFrom(motionSensors.getOrientation(matrix));
       });
     });
@@ -99,19 +100,22 @@ class _MyAppState extends State<MyApp> {
                   Radio(
                     value: 1,
                     groupValue: _groupValue,
-                    onChanged: (dynamic value) => setUpdateInterval(value, Duration.microsecondsPerSecond ~/ 1),
+                    onChanged: (dynamic value) => setUpdateInterval(
+                        value, Duration.microsecondsPerSecond ~/ 1),
                   ),
                   Text("1 FPS"),
                   Radio(
                     value: 2,
                     groupValue: _groupValue,
-                    onChanged: (dynamic value) => setUpdateInterval(value, Duration.microsecondsPerSecond ~/ 30),
+                    onChanged: (dynamic value) => setUpdateInterval(
+                        value, Duration.microsecondsPerSecond ~/ 30),
                   ),
                   Text("30 FPS"),
                   Radio(
                     value: 3,
                     groupValue: _groupValue,
-                    onChanged: (dynamic value) => setUpdateInterval(value, Duration.microsecondsPerSecond ~/ 60),
+                    onChanged: (dynamic value) => setUpdateInterval(
+                        value, Duration.microsecondsPerSecond ~/ 60),
                   ),
                   Text("60 FPS"),
                 ],
@@ -174,9 +178,12 @@ class _MyAppState extends State<MyApp> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Text('${degrees(_absoluteOrientation2.x).toStringAsFixed(4)}'),
-                  Text('${degrees(_absoluteOrientation2.y).toStringAsFixed(4)}'),
-                  Text('${degrees(_absoluteOrientation2.z).toStringAsFixed(4)}'),
+                  Text(
+                      '${degrees(_absoluteOrientation2.x).toStringAsFixed(4)}'),
+                  Text(
+                      '${degrees(_absoluteOrientation2.y).toStringAsFixed(4)}'),
+                  Text(
+                      '${degrees(_absoluteOrientation2.z).toStringAsFixed(4)}'),
                 ],
               ),
               Text('Screen Orientation'),
